@@ -2,7 +2,6 @@
   "name": "loboxassignment",
   "version": "1.0.0",
   "description": "Implementaion of Multi Dropdown",
-  "main": "index.js",
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html",
