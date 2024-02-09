@@ -8,3 +8,8 @@ Implement a multi drop-down select component with the ability to add new items b
 - Make the code reusable
 - Use TypeScript
 - Use SCSS, and try to implement it similarly to the image as much as possible.
+
+# Steps to Run the Application
+
+- 1. npm i
+- 2. npx parcel index.html
