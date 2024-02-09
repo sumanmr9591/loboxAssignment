@@ -41,6 +41,7 @@ const MultiSelect = ({ value, onChange, options, setOptions }: SelectProps) => {
       setOptions(newOptions);
       selectOption(newEntry);
       setNewOption("");
+      setIsOpen(true);
     }
   };
 
@@ -108,7 +109,7 @@ const MultiSelect = ({ value, onChange, options, setOptions }: SelectProps) => {
               onClick={(e) => {
                 e.stopPropagation();
                 selectOption(option);
-                setIsOpen(false);
+                // setIsOpen(false);
               }}
               className={`option ${
                 isOptionSelected(option) ? "selected" : ""

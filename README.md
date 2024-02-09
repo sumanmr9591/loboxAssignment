@@ -12,4 +12,4 @@ Implement a multi drop-down select component with the ability to add new items b
 # Steps to Run the Application
 
 - 1. npm i
-- 2. npx parcel index.html
+- 2. npx parcel index.html / "npm run start"
