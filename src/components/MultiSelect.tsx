@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./select.scss";
 
 export type SelectOption = {
@@ -10,10 +10,11 @@ type SelectProps = {
   options: SelectOption[];
   onChange: (value: SelectOption[] | undefined) => void;
   value: SelectOption[];
+  setOptions: (value: SelectOption[]) => void;
 };
 
-const MultiSelect = ({ value, onChange, options }: SelectProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+const MultiSelect = ({ value, onChange, options, setOptions }: SelectProps) => {
+  const [newOption, setNewOption] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const clearOptions = () => onChange([]);
@@ -28,26 +29,18 @@ const MultiSelect = ({ value, onChange, options }: SelectProps) => {
     return value.some((val) => val.value === option.value);
   };
 
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.target != containerRef.current) return;
-      switch (e.code) {
-        case "Enter":
-          break;
-        case "ArrowDown":
-          if (!isOpen) {
-            setIsOpen(true);
-            break;
-          }
-          const newValue = highlightedIndex + (e.code === "ArrowDown" ? 1 : -1);
-          if (newValue >= 0 && newValue < options.length) {
-            setHighlightedIndex(newValue);
-          }
-      }
-    };
-    containerRef.current?.addEventListener("keydown", handler);
-    return () => containerRef.current?.removeEventListener("keydown", handler);
-  }, [isOpen, highlightedIndex, options]);
+  const checkInputKeyPress = (e: KeyboardEvent) => {
+    if (e.code === "Enter" && newOption.length > 0) {
+      const newEntry = {
+        label: newOption,
+        value: Number(options.length + 1),
+      };
+      const newOptions = [...options, newEntry];
+      setOptions(newOptions);
+      selectOption(newEntry);
+      setNewOption("");
+    }
+  };
 
   useEffect(() => {
     if (isOpen) setHighlightedIndex(0);
@@ -58,7 +51,6 @@ const MultiSelect = ({ value, onChange, options }: SelectProps) => {
       <h3>React Multi Select</h3>
       <div
         tabIndex={0}
-        ref={containerRef}
         className="container"
         onClick={() => setIsOpen((prev) => !prev)}
         onBlur={() => setIsOpen(false)}
@@ -78,7 +70,13 @@ const MultiSelect = ({ value, onChange, options }: SelectProps) => {
             </button>
           ))}
         </span>
-        <input type="text" placeholder="Add New Option..." />
+        <input
+          type="text"
+          value={newOption}
+          onChange={(e) => setNewOption(e.target.value)}
+          placeholder="Add New Option..."
+          onKeyPress={(e) => checkInputKeyPress(e)}
+        />
         <button
           className="clearBtn"
           onClick={(e) => {
