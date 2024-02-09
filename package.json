@@ -17,11 +17,14 @@
   },
   "homepage": "https://github.com/sumanmr9591/loboxAssignment#readme",
   "devDependencies": {
+    "@parcel/transformer-sass": "^2.11.0",
     "parcel": "^2.11.0",
-    "process": "^0.11.10"
+    "process": "^0.11.10",
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "sass": "^1.70.0"
   }
 }
