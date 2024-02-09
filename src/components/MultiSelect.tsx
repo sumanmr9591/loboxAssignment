@@ -18,6 +18,7 @@ const MultiSelect = ({ value, onChange, options, setOptions }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const clearOptions = () => onChange([]);
+
   const selectOption = (option: SelectOption) => {
     if (value.includes(option)) {
       onChange(value.filter((o) => o !== option));
@@ -25,6 +26,7 @@ const MultiSelect = ({ value, onChange, options, setOptions }: SelectProps) => {
       onChange([...value, option]);
     }
   };
+
   const isOptionSelected = (option: SelectOption) => {
     return value.some((val) => val.value === option.value);
   };
@@ -52,8 +54,15 @@ const MultiSelect = ({ value, onChange, options, setOptions }: SelectProps) => {
       <div
         tabIndex={0}
         className="container"
-        onClick={() => setIsOpen((prev) => !prev)}
-        onBlur={() => setIsOpen(false)}
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsOpen((prev) => !prev);
+        }}
+        onBlur={() =>
+          setTimeout(() => {
+            setIsOpen(false);
+          }, 100)
+        }
       >
         <span className="value">
           {value.map((v) => (
@@ -73,7 +82,10 @@ const MultiSelect = ({ value, onChange, options, setOptions }: SelectProps) => {
         <input
           type="text"
           value={newOption}
-          onChange={(e) => setNewOption(e.target.value)}
+          onChange={(e) => {
+            e.stopPropagation();
+            setNewOption(e.target.value);
+          }}
           placeholder="Add New Option..."
           onKeyPress={(e) => checkInputKeyPress(e)}
         />
@@ -87,22 +99,23 @@ const MultiSelect = ({ value, onChange, options, setOptions }: SelectProps) => {
           &times;
         </button>
         <div className="divider"></div>
-        <div className="caret"></div>
+        <div className={`caret ${isOpen ? "inverted" : ""}`}></div>
         <ul className={`options ${isOpen ? "show" : ""}`}>
           {options.map((option: SelectOption, index: number) => (
             <li
               key={option.value}
+              onMouseEnter={() => setHighlightedIndex(index)}
               onClick={(e) => {
                 e.stopPropagation();
                 selectOption(option);
                 setIsOpen(false);
               }}
-              onMouseEnter={() => setHighlightedIndex(index)}
               className={`option ${
                 isOptionSelected(option) ? "selected" : ""
               } ${index === highlightedIndex ? "highlighted" : ""}`}
             >
               {option.label}
+              {isOptionSelected(option) && <span>&#10003;</span>}
             </li>
           ))}
         </ul>

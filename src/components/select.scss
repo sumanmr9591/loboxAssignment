@@ -17,13 +17,13 @@
     align-items: center;
     gap: 0.5em;
     padding: 0.5em;
-    border-radius: 0.25em;
+    border-radius: 0.5em;
     outline: none;
     input {
       border: none;
       font-family: "Times New Roman", Times, serif;
       font-size: 18px;
-      color: slategray;
+      color: rgb(152, 155, 160);
       outline: none;
     }
     .value {
@@ -32,9 +32,9 @@
       gap: 0.5em;
       flex-wrap: wrap;
     }
-    .closeBtn {
+    .clearBtn {
       background: none;
-      color: #777;
+      color: rgb(152, 155, 160);
       border: none;
       outline: none;
       cursor: pointer;
@@ -55,6 +55,9 @@
       border: 0.25em solid transparent;
       border-top-color: #777;
     }
+    .inverted {
+      transform: rotate(180deg) translate(0, 55%);
+    }
     .options {
       display: none;
       position: absolute;
@@ -63,27 +66,36 @@
       list-style: none;
       max-height: 15em;
       overflow-y: auto;
-      border: 0.05em solid #777;
+      border: 1px solid #777;
+      border-radius: 0.5em;
       width: 100%;
       left: 0;
-      top: calc(100% + 0.25em);
+      top: calc(100% + 0.5em);
       background: white;
-      z-index: 100;
+      z-index: 999999;
+      padding: 1vh 0.5vw;
+      color: rgb(152, 155, 160);
+      font-family: Arial, Helvetica, sans-serif;
     }
     .options.show {
       display: block;
     }
     .option {
+      height: 3vh;
       padding: 0.25em 0.5em;
-      cursor: pointer;
+      cursor: pointer !important;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 999;
     }
     .option.highlighted {
-      background-color: hsl(200, 100%, 50%);
-      color: white;
+      background-color: rgb(242, 244, 255);
+      color: rgb(115, 139, 211);
     }
     .option.selected {
-      background-color: hsl(200, 100%, 70%);
-      color: white;
+      background-color: rgb(242, 244, 255);
+      color: rgb(115, 139, 211);
     }
     .optionBadge {
       display: flex;
@@ -94,6 +106,7 @@
       cursor: pointer;
       background: none;
       outline: none;
+      color: rgb(152, 155, 160);
     }
     .optionBadge:hover,
     .optionBadge:focus {
@@ -111,6 +124,7 @@
   }
 
   .container:focus {
-    border-color: hsl(200, 100%, 50%);
+    border-color: rgb(152, 168, 219);
+    border-width: 1.5px;
   }
 }
